@@ -1,0 +1,13 @@
+export default  {
+    databaseURL:"https://next-gate-t-new-bdd.firebaseio.com/",
+    type: "service_account",
+    project_id: "next-gate-t-new-bdd",
+  private_key_id: "e949b28ebf9d7d9b9c402bf1baabbbd5f061a518",
+  private_key: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCdPnZZY8xNXar8\nBlKgHOtouewvqs+N0hEEyhOhN5OZIUwy3HZogAqyKme8TQ7ykJMg5DxxnWgdFPr9\nYqe1BvoxX/edJhSM/tFERAKRqFP/2+PTFavtj2FpKZ8GXrU5bKwK+XypLzu9BlUI\n96YN2m2IrAPDZ/wJlZKaU2ZyAvwPqgIm4ckgpI/O7+JxU6AKpWS2qZvrjJjV+myG\n4JsCBUeV9bwznqL37TVX9j7QeTCIQHCRQrW0JvtuX65IBwxb/A24vVJiUxgY9oNl\nx/MLqHwrwaezNfPUxM7XbBd4ZWn1YMQ/fxcnHNx71ir7HsOXz/2kwxgRWh991ms3\n8RAUqJnRAgMBAAECggEAA8o60mvw9qrO5J6T/nJaZWT/Z/HqaShEN/G7u2NtiUyG\nKHISRvG4tq0GLXTmBIhIVr8DJFhMGoQkI76G/RQBkvZIySury+79K3Oml2aPovEX\n2Q413XBa3RmfUM+WxDjCt/9l0JlOchkYksv1RdkBhUCWiDuVyMPA8ggXxgbp/S6g\nI9vEg0Kj6lF126Fyf+Y5cIBS8OETcMadr4KlHzU8v+HSgY3rWuMOt2HOtU7g2DqX\nt9fDPP9onjGmBi+k7x0MLcCpOEqipp6GlLCOIF1VJ2d2CxEC+3p031VOwGx7kNu1\n95eTKrl/yncLEk4VvuN657nXKl0njxh+T7j8CgER4QKBgQDSdg0IfbTQsbTQrKSG\nHMgYiY4racxGIDb29oKVv8crOdp4r4B9KitBVitYD+zbzHtP1orL/eNCdjDaOwxh\n1G7cKss1MCagN45lh08j55nmoC6/zjh9JyQ1c7C7tCpo6C+L2ASM52hS9TLc/SH9\ndscd8LpNUtF56UlDFHSCIElcXQKBgQC/RJXws2j54tu+8AkwZnRBjoPV9bkj7eTm\nV3X3/j8GdiOQPfipAvpqoharQUu9Lx9wlwSv1AtzWGg6sqoqHW74Lta6syMcNPjP\nO2DzS231C4GvzIJZnxFGk0kONnMEE1afAgjXR3D4IDTZu++rt22VN3JQk/SpClUt\njI4IDqQ8BQKBgQCVmZZwF7MEuZz2zBFyx1iwoG6vi1fJ7TJE4Ds4qQaxQkF6kf36\nepQesFrFESTjpHlu6ejlUgZOAud86IZHsBJRbBXgK+b48iTFJKZrtkBegDRa4QKk\na8NAP4k8E7gltA3AEQBDDGbKuUK7dS/JFLo7HRfAyQLf7qTGCu86ZCrhfQKBgGgA\nr1d29voJ9VtZwmVjEIwlJmLNfqKe1Py7ShZTVYn561Sfnfqo9+nLwW/VzY1NdlcO\nhynkr2VFCUgBpq3H23NwZKqYhdrsou5sZ0dkGKJKY3ZoSejZqdcqd2sXCGuK6GsF\n/DCzVCZXvOU4YBaLYzbkM3DFQyA30iE2cHTJIVzRAoGAEthZYyUtLDDEdYcImjia\nI/HfWvASka/bGVftyNH4KTvLQESJ1xHixnefMuuMlwdG9kS5ykBAV651/P2Iodpx\nH2OxC515hfJyolpbSAz0X0VF2c8QGEqw2uWgDb7CsXDboUN6ugNku1nN4MkoLJij\nPc3ue9NntOqGnKXNbVB6Smk=\n-----END PRIVATE KEY-----\n",
+  client_email: "firebase-adminsdk-27km8@next-gate-t-new-bdd.iam.gserviceaccount.com",
+  client_id: "105840727683209966776",
+  auth_uri: "https://accounts.google.com/o/oauth2/auth",
+  token_uri: "https://oauth2.googleapis.com/token",
+  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+  client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-27km8%40next-gate-t-new-bdd.iam.gserviceaccount.com"
+}

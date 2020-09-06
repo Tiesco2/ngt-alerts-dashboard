@@ -69,6 +69,7 @@ class GlobalVisualisation extends React.Component {
               data={data2015}
               x={"quarter"}
               y={"earnings"}
+              
             />
             
           </VictoryStack>
