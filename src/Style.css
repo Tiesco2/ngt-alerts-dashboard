@@ -22,7 +22,7 @@
     justify-content: center;
     padding: 20px 0;
     margin: 0;
-    margin-top: -600px;
+    margin-top: -615px;
     margin-bottom: 50px;
     background-color: rgb(21, 146, 146);
 
@@ -41,12 +41,15 @@
   }
   
   .what {
-    color: #009688 ;
+    color: #00695c ;
   }
 
   .story {
     color: #00695c ;
+   
   }
  .data{
-   color: #009688;
+   color: #00695c;
+   word-spacing: 3px;
+   word-spacing: 0.3em;
  }

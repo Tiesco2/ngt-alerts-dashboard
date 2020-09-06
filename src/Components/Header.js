@@ -8,22 +8,21 @@ const Header= () => {
     <nav>
       
       <ul className="Header">
+        <li>
+          <NavLink activeClassName="active" exact to="">GlobalVisualisation</NavLink>
+        </li>
+        <li>
+         <NavLink activeClassName="active" exact to="/NbAlertVisibility">NbAlertVisibility</NavLink>     
+        </li>
           
         <li>
-            <NavLink activeClassName="active" exact to="/">NGTHome</NavLink>
+            <NavLink activeClassName="active" exact to="/ReportStatusVisibility">ReportStatusVisibility</NavLink>
         </li> 
 
         <li>
-            <NavLink activeClassName="active" exact to="/datas">Datas</NavLink>
+        <NavLink activeClassName="active" exact to="/Dashboard">Dashboard</NavLink>
         </li>
-
-        <li>
-            <NavLink activeClassName="active" exact to="FluctuationRepStaDate">FluctuationRepStaDate</NavLink>
-        </li>
-
-        <li>
-            <NavLink activeClassName="active" exact to="/FluctuationNbAlertsDate">FluctuationNbAlertsDate</NavLink>
-        </li>
+        
       
       </ul>
         
