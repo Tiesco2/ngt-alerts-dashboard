@@ -70,9 +70,9 @@ class GlobalVisualisation extends React.Component {
         pieData = pieData.map(subFund => {
           if (subFund.x === subfundName) {
             return {
-                    ...subFund, 
-                    y: subFund.y + parseInt(datas[i].nb_alerts)
-                  } 
+              ...subFund, 
+              y: subFund.y + parseInt(datas[i].nb_alerts)
+            } 
           } else {
             return subFund;
           }
@@ -82,26 +82,24 @@ class GlobalVisualisation extends React.Component {
       
     }
     
-    console.log(sharedClassesNames);
-    console.log(barData);
+    // console.log(sharedClassesNames);
+    // console.log(barData);
+    console.log(pieData);
+
     this.setState({
-        pieData: pieData,
-        barData: barData,
-        labels: sharedClassesNames,
-        loading: false
+      pieData: pieData,
+      barData: barData,
+      labels: sharedClassesNames,
+      loading: false
     })
     
   
   }
-  componentDidMount() {
-    
-    
-           
-  }
+  
 
   componentWillMount() { 
     const ref = firebase.database().ref('asset_data')
-    var startDate = moment('20200501');
+    var startDate = moment('20200504');
     var endDate = moment('20200504');
     console.log(ref);
       ref.orderByChild("date").startAt(startDate.unix()).endAt(endDate.unix())
