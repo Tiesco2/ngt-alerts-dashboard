@@ -48,7 +48,72 @@ class App extends React.Component {
     <div className="App">
       <header className="App-header">
         <Switch>
-          <Route exact path="/" component={GlobalVisualisation} />
+          <Route
+            exact
+            path='/'
+            render={(props) => (
+              <GlobalVisualisation {...props} datas={this.state.asset_data} />
+            )}
+          />          <Route
+            exact
+            path='/'
+            render={(props) => (
+              <GlobalVisualisation {...props} datas={this.state.asset_data} />
+            )}
+          />          <Route
+            exact
+            path='/'
+            render={(props) => (
+              <GlobalVisualisation {...props} datas={this.state.asset_data} />
+            )}
+          />
+
+
+          <Route
+            exact
+            path='/'
+            render={(props) => (
+              <GlobalVisualisation {...props} datas={this.state.asset_data} />
+            )}
+          />
+
+
+          <Route
+            exact
+            path='/'
+            render={(props) => (
+              <GlobalVisualisation {...props} datas={this.state.asset_data} />
+            )}
+          />
+
+
+          <Route
+            path='/'
+            render={(props) => (
+              <GlobalVisualisation {...props} datas={this.state.asset_data} />
+            )}
+          />
+
+
+          <Route
+            path='/'
+            render={(props) => (
+              <GlobalVisualisation {...props} datas={this.state.asset_data} />
+            )}
+          />
+
+
+          <Route
+            path='/dashboard'
+            render={(props) => (
+              <Dashboard {...props} datas={this.state.asset_data} />
+            )}
+          />
+
+
+
+
+          
           <Route exact path="/NbAlertVisibility" component={NbAlertVisibility} />
           <Route exact path="/ReportStatusVisibility" component={ReportStatusVisibility} /> 
           <Route
