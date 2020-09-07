@@ -31,10 +31,17 @@ class GlobalVisualisation extends React.Component {
     let barData = [];
     let pieData = [];
 
+    let notReadyReports = 0;
+
     for (let i=0; i<datas.length; i++) {
       console.log('yo')
       let sharedClassName = datas[i].share_class_name.replace('Class ','')
       console.log(sharedClassName.replace(' Class ',''));
+      // Handle not ready reports
+      if(datas[i].report_status === 'False') {
+        notReadyReports ++
+      }
+
 
       // Handle by className
       if(!sharedClassesNames.includes(sharedClassName)) {
@@ -90,6 +97,7 @@ class GlobalVisualisation extends React.Component {
       pieData: pieData,
       barData: barData,
       labels: sharedClassesNames,
+      percentLimit:  Math.trunc(notReadyReports / datas.length * 100),
       loading: false
     })
     
@@ -136,7 +144,7 @@ class GlobalVisualisation extends React.Component {
          {!this.state.loading && (  
            <>
             <div style={{position: "fixed", top: "40px", left: "80%", "height": "200px"}} >
-              <ProgBar />
+              <ProgBar percentLimit={this.state.percentLimit} />
             </div>
             <h4>⚠️ VOLUM BY SUBFUND</h4>
 

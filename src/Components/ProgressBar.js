@@ -6,15 +6,15 @@ class ProgressBar extends React.Component {
     constructor() {
       super();
       this.state = {
-        percent: 25, data: this.getData(0)
+        percent: 10, data: this.getData(0)
       };
     }
   
     componentDidMount() {
-      let percent = 25;
+      let percent = 10;
       this.setStateInterval = window.setInterval(() => {
-        percent += (Math.random() * 25);
-        percent = (percent > 100) ? 0 : percent;
+        percent += (Math.random() * 10);
+        percent = (percent > 100) ? this.props.percentLimit : percent;
         this.setState({
           percent, data: this.getData(percent)
         });
@@ -23,6 +23,11 @@ class ProgressBar extends React.Component {
   
     componentWillUnmount() {
       window.clearInterval(this.setStateInterval);
+    }
+    componentDidUpdate(prevState) {
+        if(this.state.percent > this.props.percentLimit) {
+             window.clearInterval(this.setStateInterval);
+        }
     }
   
     getData(percent) {
@@ -34,9 +39,7 @@ class ProgressBar extends React.Component {
         <>
           <h8 style={{fontSize: "12px"}}>REPORTS COMPLETION </h8>
           <svg viewBox="0 0 400 400" width="60%" height="60%">
-         
-
-
+    
             <VictoryPie
               standalone={false}
               animate={{ duration: 1000 }}
