@@ -1,77 +1,84 @@
-
-import React from 'react';
-import { VictoryPie, VictorySharedEvents, VictoryBar, VictoryLabel, VictoryAnimation, VictoryStack, VictoryTheme, VictoryGroup } from 'victory';
+import React from "react";
+import { VictoryPie, VictoryLabel, VictoryAnimation } from "victory";
 
 class ProgressBar extends React.Component {
-    constructor() {
-      super();
-      this.state = {
-        percent: 10, data: this.getData(0)
-      };
-    }
-  
-    componentDidMount() {
-      let percent = 10;
-      this.setStateInterval = window.setInterval(() => {
-        percent += (Math.random() * 10);
-        percent = (percent > 100) ? this.props.percentLimit : percent;
-        this.setState({
-          percent, data: this.getData(percent)
-        });
-      }, 2000);
-    }
-  
-    componentWillUnmount() {
+  constructor() {
+    super();
+    this.state = {
+      percent: 10,
+      data: this.getData(0),
+    };
+  }
+
+  componentDidMount() {
+    let percent = 10;
+    this.setStateInterval = window.setInterval(() => {
+      percent += Math.random() * 10;
+      percent = percent > 100 ? this.props.percentLimit : percent;
+      this.setState({
+        percent,
+        data: this.getData(percent),
+      });
+    }, 2000);
+  }
+
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
+  }
+  componentDidUpdate(prevState) {
+    if (this.state.percent > this.props.percentLimit) {
       window.clearInterval(this.setStateInterval);
     }
-    componentDidUpdate(prevState) {
-        if(this.state.percent > this.props.percentLimit) {
-             window.clearInterval(this.setStateInterval);
-        }
-    }
-  
-    getData(percent) {
-      return [{ x: 1, y: percent }, { x: 2, y: 100 - percent }];
-    }
-  
-    render() {
-      return (
-        <>
-          <h8 style={{fontSize: "12px"}}>REPORTS COMPLETION </h8>
-          <svg viewBox="0 0 400 400" width="60%" height="60%">
-    
-            <VictoryPie
-              standalone={false}
-              animate={{ duration: 1000 }}
-              width={400} height={400}
-              data={this.state.data}
-              innerRadius={120}
-              cornerRadius={25}
-              labels={() => null}
-              style={{
-                data: { fill: ({ datum }) => {
+  }
+
+  getData(percent) {
+    return [
+      { x: 1, y: percent },
+      { x: 2, y: 100 - percent },
+    ];
+  }
+
+  render() {
+    return (
+      <>
+        <h8 style={{ fontSize: "12px" }}>REPORTS COMPLETION </h8>
+        <svg viewBox="0 0 400 400" width="60%" height="60%">
+          <VictoryPie
+            standalone={false}
+            animate={{ duration: 1000 }}
+            width={400}
+            height={400}
+            data={this.state.data}
+            innerRadius={120}
+            cornerRadius={25}
+            labels={() => null}
+            style={{
+              data: {
+                fill: ({ datum }) => {
                   const color = datum.y > 30 ? "green" : "red";
                   return datum.x === 1 ? color : "transparent";
-                }
-                }
-              }}
-            />
-            <VictoryAnimation duration={1000} data={this.state}>
-              {(newProps) => {
-                return (
-                  <VictoryLabel
-                    textAnchor="middle" verticalAnchor="middle"
-                    x={200} y={200}
-                    text={`${Math.round(newProps.percent)}%`}
-                    style={{ fontSize: 45 }}
-                  />
-                );
-              }}
-            </VictoryAnimation>
-          </svg>
-        </>
-      );
-    }
+                },
+              },
+            }}
+          />
+          <VictoryAnimation duration={1000} data={this.state}>
+            {(newProps) => {
+              return (
+                <VictoryLabel
+                  textAnchor="middle"
+                  verticalAnchor="middle"
+                  x={200}
+                  y={200}
+                  text={`${Math.round(newProps.percent)}%`}
+                  style={{ fontSize: 45 }}
+                />
+              );
+            }}
+          </VictoryAnimation>
+        </svg>
+      </>
+    );
   }
-  
- export default ProgressBar
+}
+
+export default ProgressBar;
