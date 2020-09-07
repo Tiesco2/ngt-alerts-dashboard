@@ -1,36 +1,47 @@
 import React from 'react';
-import { VictoryPie, VictorySharedEvents, VictoryBar, VictoryLabel } from 'victory';
-
+import { VictoryPie, VictorySharedEvents, VictoryBar, VictoryLabel, VictoryStack } from 'victory';
+import moment from 'moment';
+import * as firebase from "firebase";
 
 class GlobalVisualisation extends React.Component {
 
   state = {
-    barData : [
-      {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}, {x: "d", y: 4}
-    ],
-    pieData : [
-      {x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}
-    ],
-    labels: ["a", "b", "c", "d"]
-  }
+    loading: true,
+   }    
+  // state = {
+  //   loadig: true,
+  //   barData : [
+  //     {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}, {x: "d", y: 4}
+  //   ],
+  //   pieData : [
+  //     {x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}
+  //   ],
+  //   labels: ["a", "b", "c", "d"]
+  // }
 
-  getGroupNames=(datas)=>{
+  generateChartsDatas=(datas)=>{
     console.log('je suis dans la fonction');
-    var groupName = [];
-    let final = [];
+    var sharedClassesNames = [];
+    var commonSubfundNames = [];
+
+    let barData = [];
+    let pieData = [];
+
     for (let i=0; i<datas.length; i++) {
       console.log('yo')
-      let classFund = datas[i].share_class_name
-      console.log(classFund);
-      if(!groupName.includes(classFund)) {
-        groupName.push(classFund)
-        final.push({
-                    x: classFund, 
+      let sharedClassName = datas[i].share_class_name.replace('Class ','')
+      console.log(sharedClassName.replace(' Class ',''));
+
+      // Handle by className
+      if(!sharedClassesNames.includes(sharedClassName)) {
+        sharedClassesNames.push(sharedClassName)
+        barData.push({
+                    x: sharedClassName, 
                     y:  parseInt(datas[i].nb_alerts)
                   })
       } else {
-        final = final.map(group => {
-          if (group.x === classFund) {
+        barData = barData.map(group => {
+          if (group.x === sharedClassName) {
             return {
                     ...group, 
                     y: group.y + parseInt(datas[i].nb_alerts)
@@ -40,23 +51,74 @@ class GlobalVisualisation extends React.Component {
           }
         })
       }
+
+      // Handle By subFund Name
+
+      let subfundName = datas[i].subfund_name
+
+      if(!commonSubfundNames.includes(subfundName)) {
+        commonSubfundNames.push(subfundName);
+        pieData.push({
+          x: subfundName, 
+          y:  parseInt(datas[i].nb_alerts)
+        })
+      } else {
+        pieData = pieData.map(subFund => {
+          if (subFund.x === subfundName) {
+            return {
+                    ...subFund, 
+                    y: subFund.y + parseInt(datas[i].nb_alerts)
+                  } 
+          } else {
+            return subFund;
+          }
+        })
+      }
+      
+      
     }
     
-    console.log(groupName);
-    console.log(final);
+    console.log(sharedClassesNames);
+    console.log(barData);
     this.setState({
-        pieData: final,
-        barData: final,
-        labels: groupName
-
+        pieData: pieData,
+        barData: barData,
+        labels: sharedClassesNames,
+        loading: false
     })
-
+    
+  
   }
   componentDidMount() {
     
     
            
   }
+
+  componentWillMount() { 
+    const ref = firebase.database().ref('asset_data')
+    var startDate = moment('20200501');
+    var endDate = moment('20200504');
+    console.log(ref);
+      ref.orderByChild("date").startAt(startDate.unix()).endAt(endDate.unix())
+      .on("value", snapshot => {
+        console.log("got the data!", snapshot.val());
+        this.generateChartsDatas(snapshot.val());
+        // this.setState({
+        //   asset_data: snapshot.val(),
+        //   loading: false
+        // })
+      });
+      /*ref.on('value', snapshot => {
+      console.log('salut data');
+      console.log(snapshot.val())
+      this.setState({
+        asset_data: snapshot.val(),
+        loading: false
+      })
+    })*/
+  }
+
   createChartData = () => {
       console.log(this.props.datas, 'données');
       
@@ -77,63 +139,74 @@ class GlobalVisualisation extends React.Component {
     )
   }
 
+  componentDidUpdate(prevState, prevProps) {
+    
+  }
+  // componentDidUpdate() {
+  //   this.generateChartsDatas(this.props.datas || []); 
+
+  // }
+
   render(){   
    // if(this.props.datas) {
-      this.getGroupNames(this.props.datas || []); 
   //  }
   return(
     <div>
         <h1 className="data">Dashboard</h1>
-        <svg viewBox="0 0 450 350">
-  <VictorySharedEvents
-    events={[{
-      childName: ["pie", "bar"],
-      target: "data",
-      eventHandlers: {
-        onMouseOver: () => {
-          return [{
-            childName: ["pie", "bar"],
-            mutation: (props) => {
-              return {
-                style: Object.assign({}, props.style, {fill: "tomato"})
-              };
-            }
-          }];
-        },
-        onMouseOut: () => {
-          return [{
-            childName: ["pie", "bar"],
-            mutation: () => {
-              return null;
-            }
-          }];
-        }
-      }
-    }]}
-  >
-    <g transform={"translate(150, 50)"}>
-      <VictoryBar name="bar"
-        width={300}
-        standalone={false}
-        style={{
-          data: { width: 20 },
-          labels: {fontSize: 25}
-        }}
-        data={this.state.barData}
-        labels={this.state.labels}
-        labelComponent={<VictoryLabel y={290}/>}
-      />
-    </g>
-    <g transform={"translate(0, -75)"}>
-      <VictoryPie name="pie"
-        width={250}
-        standalone={false}
-        style={{ labels: {fontSize: 25, padding: 10}}}
-        data={this.state.pieData}
-      />
-    </g>
-  </VictorySharedEvents>
-</svg>      
+         {!this.state.loading && (  <svg viewBox="0 0 450 350">
+          <VictorySharedEvents
+            events={[{
+              childName: ["pie", "bar"],
+              target: "data",
+              eventHandlers: {
+                onMouseOver: () => {
+                  return [{
+                    childName: ["pie", "bar"],
+                    mutation: (props) => {
+                      return {
+                        style: Object.assign({}, props.style, {fill: "tomato"})
+                      };
+                    }
+                  }];
+                },
+                onMouseOut: () => {
+                  return [{
+                    childName: ["pie", "bar"],
+                    mutation: () => {
+                      return null;
+                    }
+                  }];
+                }
+              }
+            }]}
+          >
+            <g transform={"translate(150, 50)"}>
+              
+              <VictoryBar name="bar"
+                width={450}
+                standalone={false}
+                style={{
+                  data: { width: 6 },
+                  labels: {fontSize: 7}
+                }}
+                data={this.state.barData}
+                labels={this.state.labels}
+                labels={({ datum }) => datum.y+' '+ datum.x}
+                labelComponent={<VictoryLabel angle={-90} y={270}/>}
+              />
+            </g>
+            <g transform={"translate(0, -75)"}>
+              <VictoryPie name="pie"
+                width={240}
+                labelComponent={<VictoryLabel angle={-40}/>}
+                standalone={false}
+                style={{ labels: {fontSize: 8, padding: 7}}}
+                data={this.state.pieData}
+              />
+            </g>
+          </VictorySharedEvents>
+        </svg>)}
+      
       </div>
     );
   }
