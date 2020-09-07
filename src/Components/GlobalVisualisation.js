@@ -1,7 +1,11 @@
 import React from 'react';
-import { VictoryPie, VictorySharedEvents, VictoryBar, VictoryLabel, VictoryStack } from 'victory';
+import { VictoryPie, VictorySharedEvents, VictoryBar, VictoryLabel, VictoryStack, VictoryTheme, VictoryGroup } from 'victory';
 import moment from 'moment';
 import * as firebase from "firebase";
+import { ProgressBar, Container, Alert } from "react-bootstrap";
+
+import ProgBar from './ProgressBar'
+
 
 class GlobalVisualisation extends React.Component {
 
@@ -119,29 +123,7 @@ class GlobalVisualisation extends React.Component {
     })*/
   }
 
-  createChartData = () => {
-      console.log(this.props.datas, 'données');
-      
-      return(          
-      [  
-                      
-        
-        { x: "fund_id", y: 35 }, 
-        { x: "fund_name", y: 15 },
-        { x: "nb_alert", y: 35 },   
-        { x: "subfund_id", y: 15 }, 
-        { x: "date", y: 25 },
-        { x: "share_name_id", y: 15 }, 
-        { x: "share_class_name", y: 25 },           
-        { x: "report_status", y: 25 }, 
-        { x: "subfund_name", y: 15 }    
-      ]
-    )
-  }
-
-  componentDidUpdate(prevState, prevProps) {
-    
-  }
+  
   // componentDidUpdate() {
   //   this.generateChartsDatas(this.props.datas || []); 
 
@@ -152,61 +134,54 @@ class GlobalVisualisation extends React.Component {
   //  }
   return(
     <div>
-        <h1 className="data">Dashboard</h1>
-         {!this.state.loading && (  <svg viewBox="0 0 450 350">
-          <VictorySharedEvents
-            events={[{
-              childName: ["pie", "bar"],
-              target: "data",
-              eventHandlers: {
-                onMouseOver: () => {
-                  return [{
-                    childName: ["pie", "bar"],
-                    mutation: (props) => {
-                      return {
-                        style: Object.assign({}, props.style, {fill: "tomato"})
-                      };
-                    }
-                  }];
-                },
-                onMouseOut: () => {
-                  return [{
-                    childName: ["pie", "bar"],
-                    mutation: () => {
-                      return null;
-                    }
-                  }];
-                }
-              }
-            }]}
-          >
-            <g transform={"translate(150, 50)"}>
-              
-              <VictoryBar name="bar"
-                width={450}
-                standalone={false}
-                style={{
-                  data: { width: 6 },
-                  labels: {fontSize: 7}
-                }}
-                data={this.state.barData}
-                labels={this.state.labels}
-                labels={({ datum }) => datum.y+' '+ datum.x}
-                labelComponent={<VictoryLabel angle={-90} y={270}/>}
-              />
-            </g>
-            <g transform={"translate(0, -75)"}>
-              <VictoryPie name="pie"
-                width={240}
-                labelComponent={<VictoryLabel angle={-40}/>}
-                standalone={false}
-                style={{ labels: {fontSize: 8, padding: 7}}}
-                data={this.state.pieData}
-              />
-            </g>
-          </VictorySharedEvents>
-        </svg>)}
-      
+
+         {!this.state.loading && (  
+           <>
+            <div style={{position: "fixed", top: "40px", left: "80%", "height": "200px"}} >
+              <ProgBar />
+            </div>
+            <h4>⚠️ VOLUM BY SUBFUND</h4>
+
+             <VictoryGroup
+                  theme={VictoryTheme.material}
+                  height={200}
+                >
+                
+                <VictoryPie name="pie"
+                    style={{ labels: {fontSize: 3, padding: 7}}}
+                    data={this.state.pieData}
+                  />
+
+            </VictoryGroup>
+
+            <h4>⚠️ NUMBERS BY SHARED CLASSES </h4>
+            <VictoryGroup
+                  theme={VictoryTheme.material}
+                  height={300}
+                  width={700}
+                >
+                <VictoryBar
+                    style={{
+                      data: {
+                        fill: ({ datum }) => datum.x === 3 ? "#000000" : "#c43a31",
+                        stroke: ({ index }) => +index % 2 === 0  ? "#000000" : "#c43a31",
+                        fillOpacity: 0.7,
+                        strokeWidth: 0.5
+                      },
+                      labels: {
+                        fontSize: 6,
+                        fill: ({ datum }) => datum.x === 3 ? "#000000" : "#000000"
+                      }
+                    }}
+                    alignment="start"
+                    data={this.state.barData}
+                    labels={({ datum }) => [datum.y,'⚠️⚠️', ' ', datum.x ]}
+                    labelComponent={<VictoryLabel  fontSize={6} angle={30} y={50}/>}
+                  />
+              </VictoryGroup>
+          </>
+       )}
+  
       </div>
     );
   }

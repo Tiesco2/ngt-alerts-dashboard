@@ -47,7 +47,10 @@ class App extends React.Component {
   render(){
   return (
     <div className="App">
-      <header>
+      <header className="App-header">
+        <img alt="" src="https://nextgatetech.com/assets/img/brand/white-color.png" id="navbar-logo" style={{height: '90px'}}></img>
+        <h2>Global Alerts at 04/05/20</h2>
+
         <Switch>
 
           <Route
@@ -57,8 +60,7 @@ class App extends React.Component {
             )}
           />
         </Switch>
-        <style />
-        <Header />
+     
       </header>
     </div>
   );
